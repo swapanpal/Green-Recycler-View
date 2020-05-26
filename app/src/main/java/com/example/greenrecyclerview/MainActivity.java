@@ -1,10 +1,13 @@
 package com.example.greenrecyclerview;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,5 +70,31 @@ public class MainActivity extends AppCompatActivity {
 
         // Set the GreenAdapter you created on mNumbersList
         mNumbersList.setAdapter(mAdapter);
+    }
+
+    // Override onCreateOptionsMenu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+
+        /*
+         * When you click the reset menu item, we want to start all over
+         * and display the pretty gradient again. There are a few similar
+         * ways of doing this, with this one being the simplest of those
+         * ways. (in our humble opinion)
+         */
+        switch (itemId){
+            case R.id.action_refresh:
+                mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+                mNumbersList.setAdapter(mAdapter);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
